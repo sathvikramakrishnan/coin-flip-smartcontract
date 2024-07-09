@@ -1,13 +1,21 @@
-## Foundry
+# Introduction
+Hello there!\
+This smart contract implements a coin flip game
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Completion status
+Pending
 
-Foundry consists of:
+## How to play
+A user enters this game by paying a specific entrance fee. The owner of the contract pledges the same amount in this contract. Both of their funds become the prize pool.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Essentially, the user is betting this money on the coin landing on heads. The user wins the prize pool money in the contract if it lands on head.
+
+Otherwise the money is transferred to the owner's wallet.
+
+## How it works
+This program uses chainlink vrf v2.5 to generate random number that is than mapped to heads and tails.
+
+Chainlink Automation with custom logic is used to start the game and transfer the owner's funds into the contract as soon as a player enters. This 
 
 ## Documentation
 
