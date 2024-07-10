@@ -15,7 +15,7 @@ Otherwise the money is transferred to the owner's wallet.
 ## How it works
 This program uses chainlink vrf v2.5 to generate random number that is than mapped to heads and tails.
 
-Chainlink Automation with custom logic is used to start the game and transfer the owner's funds into the contract as soon as a player enters. This 
+Chainlink Automation with custom logic is used to start the game and transfer the owner's funds into the contract as soon as a player enters.
 
 ## Documentation
 
