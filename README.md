@@ -17,6 +17,9 @@ This program uses chainlink vrf v2.5 to generate random number that is than mapp
 
 Chainlink Automation with custom logic is used to start the game and transfer the owner's funds into the contract as soon as a player enters.
 
+## A note on LinkToken contract
+The contract `test/mocks/LinkToken.sol` is a modified script used in the tutorial by Patrick Collins.
+
 ## A note on private keys
 This contract is not safe to use with legitimate private keys.\
 Use only those private keys with no real assets.

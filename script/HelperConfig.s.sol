@@ -3,7 +3,8 @@
 pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
-import {VRFCoordinatorV2PlusMock} from "src/VRFCoordinatorV2PlusMock.sol";
+import {VRFCoordinatorV2PlusMock} from "test/mocks/VRFCoordinatorV2PlusMock.sol";
+import {LinkToken} from "test/mocks/LinkToken.sol";
 
 contract HelperConfig is Script {
     struct NetworkConfig {
@@ -44,31 +45,28 @@ contract HelperConfig is Script {
             });
     }
 
-    function getOrCreateAnvilEthConfig()
-        public
-        view
-        returns (NetworkConfig memory)
-    {
+    function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
         if (activeNetworkConfig.vrfCoordinator != address(0)) {
             return activeNetworkConfig;
         }
 
-        uint96 baseFee = 0.25 ether;
-        uint96 gasPriceLink = 1e9;
+        uint96 baseFee = 0.25 ether; // 0.25 LINK
+        uint96 gasPriceLink = 1e9; // 1 gwei LINK
 
-        vm.startBrodcast();
-        VRFCoordinatorV2PlusMock vrfCoordinator = new VRFCoordinatorV2PlusMock(
-            baseFee,
-            gasPriceLink
-        );
+        vm.startBroadcast();
+        VRFCoordinatorV2PlusMock vrfCoordinatorV2PlusMock = new VRFCoordinatorV2PlusMock(
+                baseFee,
+                gasPriceLink
+            );
+        LinkToken link = new LinkToken();
         vm.stopBroadcast();
 
         return
             NetworkConfig({
                 entranceFee: 0.01 ether,
                 interval: 30,
-                vrfCoordinator: address(vrfCoordinator),
-                keyHash: 0, // to be updated
+                vrfCoordinator: address(vrfCoordinatorV2PlusMock),
+                keyHash: 0, // doesn't matter
                 subscriptionId: 0,
                 callbackGasLimit: 500000,
                 link: address(link),
