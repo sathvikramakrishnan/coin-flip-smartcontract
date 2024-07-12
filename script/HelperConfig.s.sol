@@ -3,8 +3,8 @@
 pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
-import {VRFCoordinatorV2PlusMock} from "test/mocks/VRFCoordinatorV2PlusMock.sol";
-import {LinkToken} from "test/mocks/LinkToken.sol";
+import {VRFCoordinatorV2PlusMock} from "../test/mocks/VRFCoordinatorV2PlusMock.sol";
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 contract HelperConfig is Script {
     struct NetworkConfig {

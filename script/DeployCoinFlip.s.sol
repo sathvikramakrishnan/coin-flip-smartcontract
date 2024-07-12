@@ -3,7 +3,7 @@
 pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
-import {CoinFlip} from "src/CoinFlip.sol";
+import {CoinFlip} from "../src/CoinFlip.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
 import {CreateSubscription, FundSubscription, AddConsumer} from "./Interactions.s.sol";
 
@@ -42,7 +42,7 @@ contract DeployCoinFlip is Script {
             );
         }
 
-        vm.startBroadcast(deployerKey);
+        vm.startBroadcast();
         CoinFlip coinFlip = new CoinFlip(
             entranceFee,
             interval,

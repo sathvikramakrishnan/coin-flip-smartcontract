@@ -27,7 +27,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
     enum CoinState {
         TAIL, // 0
         HEAD, // 1
-        TOSS // 2
+        NA // 2
     }
 
     enum ContractState {
@@ -78,6 +78,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
 
         s_lastTimeStamp = block.timestamp;
         s_contractState = ContractState.OPEN;
+        s_coinState = CoinState.NA;
         s_ownerHasEntered = false;
     }
 
@@ -142,7 +143,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
         }
 
         s_contractState = ContractState.CALCULATING;
-        s_coinState = CoinState.TOSS;
+        s_coinState = CoinState.NA;
 
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
@@ -198,6 +199,10 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
         return i_entranceFee;
     }
 
+    function getOwner() external view returns (address) {
+        return i_owner;
+    }
+
     function getPlayer() external view returns (address) {
         return s_player;
     }
@@ -208,5 +213,9 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
 
     function getCoinState() external view returns (CoinState) {
         return s_coinState;
+    }
+
+    function getContractState() external view returns (ContractState) {
+        return s_contractState;
     }
 }
