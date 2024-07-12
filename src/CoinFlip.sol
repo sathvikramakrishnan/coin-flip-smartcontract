@@ -27,7 +27,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
     enum CoinState {
         TAIL, // 0
         HEAD, // 1
-        NA // 2
+        CALCULATING // 2
     }
 
     enum ContractState {
@@ -54,7 +54,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
     ContractState private s_contractState;
     bool private s_ownerHasEntered;
 
-    event EnteredGame(address indexed player);
+    event PlayerEnteredGame(address indexed player);
     event OwnerEnteredGame(address indexed owner);
     event RequestedWinner(uint256 indexed requestId);
     event WinnerPicked(address indexed winner, CoinState indexed flipOutput);
@@ -78,7 +78,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
 
         s_lastTimeStamp = block.timestamp;
         s_contractState = ContractState.OPEN;
-        s_coinState = CoinState.NA;
+        s_coinState = CoinState.CALCULATING;
         s_ownerHasEntered = false;
     }
 
@@ -86,12 +86,12 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
         if (msg.value < i_entranceFee) {
             revert CoinFlip__NotEnoughEthSent(msg.value);
         }
-        if (s_contractState == ContractState.CALCULATING) {
+        if (s_contractState != ContractState.OPEN) {
             revert CoinFlip__GameNotOpen();
         }
 
         s_player = (msg.sender);
-        emit EnteredGame(msg.sender);
+        emit PlayerEnteredGame(msg.sender);
     }
 
     function OwnerEntersCoinFlipGame() external payable {
@@ -101,7 +101,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
         if (msg.value < i_entranceFee) {
             revert CoinFlip__NotEnoughEthSent(msg.value);
         }
-        if (s_contractState == ContractState.CALCULATING) {
+        if (s_contractState != ContractState.OPEN) {
             revert CoinFlip__GameNotOpen();
         }
 
@@ -143,7 +143,7 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
         }
 
         s_contractState = ContractState.CALCULATING;
-        s_coinState = CoinState.NA;
+        s_coinState = CoinState.CALCULATING;
 
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
