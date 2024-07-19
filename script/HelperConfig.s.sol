@@ -3,7 +3,7 @@
 pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
-import {VRFCoordinatorV2PlusMock} from "../test/mocks/VRFCoordinatorV2PlusMock.sol";
+import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 contract HelperConfig is Script {
@@ -52,11 +52,13 @@ contract HelperConfig is Script {
 
         uint96 baseFee = 0.25 ether; // 0.25 LINK
         uint96 gasPriceLink = 1e9; // 1 gwei LINK
+        int256 weiPerUnitLink = 4e15;
 
         vm.startBroadcast();
-        VRFCoordinatorV2PlusMock vrfCoordinatorV2PlusMock = new VRFCoordinatorV2PlusMock(
+        VRFCoordinatorV2_5Mock vrfCoordinatorV2PlusMock = new VRFCoordinatorV2_5Mock(
                 baseFee,
-                gasPriceLink
+                gasPriceLink,
+                weiPerUnitLink
             );
         LinkToken link = new LinkToken();
         vm.stopBroadcast();

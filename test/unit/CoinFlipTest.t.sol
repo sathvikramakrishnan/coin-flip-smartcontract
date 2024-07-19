@@ -31,6 +31,10 @@ contract CoinFlipTest is Test {
     modifier GameEnteredAndTimePassed() {
         vm.warp(block.timestamp + interval + 1);
         vm.roll(block.number + 1);
+        vm.prank(PLAYER);
+        coinFlip.enterCoinFlipGame{value: entranceFee}();
+        vm.prank(OWNER);
+        coinFlip.OwnerEntersCoinFlipGame{value: entranceFee}();
         _;
     }
 
@@ -39,17 +43,19 @@ contract CoinFlipTest is Test {
         (coinFlip, helperConfig) = deployer.run();
 
         OWNER = coinFlip.getOwner();
-        (entranceFee, , , , , , , ) = helperConfig.activeNetworkConfig();
+        (entranceFee, interval, , , , , , ) = helperConfig
+            .activeNetworkConfig();
 
         vm.deal(PLAYER, STARTING_USER_BALANCE);
     }
 
+    // initialization tests
     function testContractStateIsOpen() public view {
         assert(coinFlip.getContractState() == CoinFlip.ContractState.OPEN);
     }
 
     function testCoinStateIsNA() public view {
-        assert(coinFlip.getCoinState() == CoinFlip.CoinState.NA);
+        assert(coinFlip.getCoinState() == CoinFlip.CoinState.CALCULATING);
     }
 
     function testOwnerIsMsgSender() public view {
@@ -57,6 +63,7 @@ contract CoinFlipTest is Test {
         assertEq(coinFlip.getOwner(), msg.sender);
     }
 
+    // entering the game tests
     function testPlayerEnterRevertsWhenNotEnoughEth() public {
         vm.prank(PLAYER);
 
@@ -114,6 +121,7 @@ contract CoinFlipTest is Test {
         coinFlip.OwnerEntersCoinFlipGame{value: entranceFee}();
     }
 
+    // performUpkeep tests
     function testNoRevertIfUpkeepNeeded() public GameEnteredAndTimePassed {
         coinFlip.performUpkeep("");
     }
@@ -128,4 +136,8 @@ contract CoinFlipTest is Test {
         );
         coinFlip.performUpkeep("");
     }
+
+    // checkUpkeep tests
+
+    // test event outputs
 }
