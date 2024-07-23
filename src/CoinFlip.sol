@@ -218,4 +218,8 @@ contract CoinFlip is VRFConsumerBaseV2Plus {
     function getContractState() external view returns (ContractState) {
         return s_contractState;
     }
+
+    function getLastTimeStamp() external view returns (uint256) {
+        return s_lastTimeStamp;
+    }
 }
