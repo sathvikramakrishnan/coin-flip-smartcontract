@@ -21,8 +21,8 @@ Chainlink Automation with custom logic is used to start the game and transfer th
 The contract `test/mocks/LinkToken.sol` is a modified script used in the tutorial by Patrick Collins.
 
 ## A note on private keys
-This contract is not safe to use with legitimate private keys.\
-Use only those private keys with no real assets.
+This contract is not safe to use with legitimate private keys. This contract was tested with private key stored locally in a `.env` file\
+Store in `.env` only those private keys that have no real assets.
 
 ## Documentation
 
