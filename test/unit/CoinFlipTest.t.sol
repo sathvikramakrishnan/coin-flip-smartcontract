@@ -223,33 +223,33 @@ contract CoinFlipTest is Test {
         );
     }
 
-    // function testFulfilllRandomWordsPicksWinner()
-    //     public
-    //     GameEnteredAndTimePassed
-    //     skipFork
-    // {
-    //     vm.recordLogs();
-    //     coinFlip.performUpkeep("");
+    function testFulfilllRandomWordsPicksWinner()
+        public
+        GameEnteredAndTimePassed
+        skipFork
+    {
+        vm.recordLogs();
+        coinFlip.performUpkeep("");
 
-    //     Vm.Log[] memory entries = vm.getRecordedLogs();
-    //     bytes32 reqId = entries[1].topics[1];
+        Vm.Log[] memory entries = vm.getRecordedLogs();
+        bytes32 reqId = entries[1].topics[1];
 
-    //     uint256 prevTimestamp = coinFlip.getLastTimeStamp();
-    //     VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(
-    //         uint256(reqId),
-    //         address(coinFlip)
-    //     );
+        uint256 prevTimestamp = coinFlip.getLastTimeStamp();
+        VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(
+            uint256(reqId),
+            address(coinFlip)
+        );
 
-    //     address winner = coinFlip.getRecentWinner();
-    //     CoinFlip.CoinState coinState = coinFlip.getCoinState();
+        address winner = coinFlip.getRecentWinner();
+        CoinFlip.CoinState coinState = coinFlip.getCoinState();
 
-    //     assert(winner != address(0));
-    //     assert(coinState != CoinFlip.CoinState.CALCULATING);
-    //     assert(coinFlip.getPlayer() == address(0));
-    //     assert(prevTimestamp < coinFlip.getLastTimeStamp());
-    //     assert(
-    //         coinFlip.getRecentWinner().balance >=
-    //             STARTING_USER_BALANCE + entranceFee
-    //     );
-    // }
+        assert(winner != address(0));
+        assert(coinState != CoinFlip.CoinState.CALCULATING);
+        assert(coinFlip.getPlayer() == address(0));
+        assert(prevTimestamp < coinFlip.getLastTimeStamp());
+        assert(
+            coinFlip.getRecentWinner().balance >=
+                STARTING_USER_BALANCE + entranceFee
+        );
+    }
 }
