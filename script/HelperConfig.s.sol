@@ -6,6 +6,9 @@ import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {LinkToken} from "../test/mocks/LinkToken.sol";
 
+/**
+ * @dev This script has configuration data for different networks
+ */
 contract HelperConfig is Script {
     struct NetworkConfig {
         uint256 entranceFee;

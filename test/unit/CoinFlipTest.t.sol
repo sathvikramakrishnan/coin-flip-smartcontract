@@ -18,11 +18,6 @@ contract CoinFlipTest is Test {
     uint256 entranceFee;
     uint256 interval;
     address vrfCoordinator;
-    // bytes32 keyHash;
-    // uint256 subscriptionId;
-    // uint32 callbackGasLimit;
-    // address link;
-    // uint256 deployerKey;
 
     CoinFlip coinFlip;
     HelperConfig helperConfig;
