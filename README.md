@@ -3,7 +3,7 @@ Hello there!\
 This smart contract implements a coin flip game
 
 ## Completion status
-Pending
+Complete
 
 ## How to play
 A user enters this game by paying a specific entrance fee. The owner of the contract pledges the same amount in this contract. Both of their funds become the prize pool.
